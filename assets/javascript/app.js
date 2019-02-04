@@ -36,7 +36,6 @@ $('.btn').on("click",function(){
     var $destination=$('#destination').val();
     var firstTrain=$('#firstTrain').val();
     var frequency=$('#frequency').val();
-    var nextArrival = nextTrain;
     var currentTime = moment().format('HH:mm')
   
     // arrival time moment js computation
