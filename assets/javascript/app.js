@@ -21,46 +21,30 @@ $('.btn').on("click",function(){
     var currentTime = moment().format('HH:mm')
  
       
-// database.ref().on(
-//     'value',
-//     function(snapshot) {
-//       console.log(snapshot.val());
+database.ref().on('value',function(snapshot) {
+      console.log(snapshot.val());
+      console.log(snapshot.val().destination);
+      console.log(snapshot.val().frequency);
+      console.log(snapshot.val().minutesAway);
+      console.log(snapshot.val().nextArrival);
+      console.log(snapshot.val().trainName);
 
 //       clickCounter = snapshot.val().clickCount;
 
 //       $('#trainName').text(snapshot.val().clickCount);
-//     }
+    });
 //     // function(errorObject) {
 //     //   console.log('The read failed: ' + errorObject.code);
 //     // }
 //   );
-
-
-  
-    
-    
-    // First Time (pushed back 1 year to make sure it comes before current time)
+    // arrival time moment js computation
     var firstTimeConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
-    // Current Time
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    // Difference between the times
     var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
-
-    // Time apart (remainder)
     var tRemainder = diffTime % frequency;
-    console.log(tRemainder);
-
-    // Minute Until Train
     var tMinutesTillTrain = frequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // Next Train
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-
+    
     database.ref().set({
         trainName: $trainName,
         destination: $destination,
