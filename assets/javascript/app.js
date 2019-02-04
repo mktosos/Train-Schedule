@@ -10,14 +10,10 @@ var config = {
 firebase.initializeApp(config);
 // database reference
 var database = firebase.database();
+
 //grab data from database on value change or on page start to display
 database.ref().on('value',function(snapshot) {
-    console.log(snapshot.val());
-    console.log(snapshot.val().destination);
-    console.log(snapshot.val().frequency);
-    console.log(snapshot.val().minutesAway);
-    console.log(snapshot.val().nextArrival);
-    console.log(snapshot.val().trainName);
+    //jqeury the values as text to ID div
     $('#trainNameD').text(snapshot.val().trainName);
     $('#destinationD').text(snapshot.val().destination);
     $('#frequencyD').text(snapshot.val().frequency);
@@ -28,7 +24,7 @@ database.ref().on('value',function(snapshot) {
     // In case of error this will print the error
     console.log("The read failed: " + errorObject.code);
   });
-  
+ // button event stores inputs to vars 
 $('.btn').on("click",function(){
     event.preventDefault();
     
@@ -46,7 +42,7 @@ $('.btn').on("click",function(){
     var tMinutesTillTrain = frequency - tRemainder;
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
 
-    
+    //write to the database
     database.ref().set({
         trainName: $trainName,
         destination: $destination,
@@ -54,7 +50,8 @@ $('.btn').on("click",function(){
         minutesAway: tMinutesTillTrain,
         nextArrival: moment(nextTrain).format("hh:mm")
     });
-    var $row = $('<tr>'+
+    //display input in a new table row with table data
+      var $row = $('<tr>'+
       '<td>'+$trainName+'</td>'+
       '<td>'+$destination+'</td>'+
       '<td>'+frequency+'</td>'+
