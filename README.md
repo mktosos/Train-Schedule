@@ -1,6 +1,6 @@
 # Train-Schedule
 This project involved getting inputted values and storing them on firebase database.
-The methods used were database.ref().set() to write the data and database.ref().on()('value').
+The methods used were database.ref().set() to write the data and database.ref().on()('value') to receive the data on any change. $jquery was used to dynamically create html. Stored data was visible to multiple users as it changed real time.  
 
 An exsiting problems: No functional problems beyond the plain vanilla aspect of my design. No extras were added unfortunately. Small bugs in the end of development really ate up time and prevented me from adding more features. Some lessons learned there.
 
