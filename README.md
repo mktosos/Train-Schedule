@@ -2,7 +2,7 @@
 This project involved getting inputted values and storing them on firebase database.
 The methods used were database.ref().set() to write the data and database.ref().on()('value').
 
-An exsiting problems: 
+An exsiting problems: No functional problems beyond the plain vanilla aspect of my design. No extras were added unfortunately. Small bugs in the end of development really ate up time and prevented me from adding more features. Some lessons learned there.
 
 Credits The game project student developer is Mike Taniguchi.
 
