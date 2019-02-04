@@ -8,35 +8,37 @@ var config = {
     messagingSenderId: "520957242957"
   };
 firebase.initializeApp(config);
-  // Get a reference to the database service
+// database reference
 var database = firebase.database();
+//grab data from database on value change or on page start to display
+database.ref().on('value',function(snapshot) {
+    console.log(snapshot.val());
+    console.log(snapshot.val().destination);
+    console.log(snapshot.val().frequency);
+    console.log(snapshot.val().minutesAway);
+    console.log(snapshot.val().nextArrival);
+    console.log(snapshot.val().trainName);
+    $('#trainNameD').text(snapshot.val().trainName);
+    $('#destinationD').text(snapshot.val().destination);
+    $('#frequencyD').text(snapshot.val().frequency);
+    $('#nextArrivalD').text(snapshot.val().nextArrival);
+    $('#minutesAwayD').text(snapshot.val().minutesAway);
+    }, function(errorObject) {
+
+    // In case of error this will print the error
+    console.log("The read failed: " + errorObject.code);
+  });
   
 $('.btn').on("click",function(){
+    event.preventDefault();
     
     var $trainName=$('#trainName').val();
     var $destination=$('#destination').val();
     var firstTrain=$('#firstTrain').val();
     var frequency=$('#frequency').val();
-    var nextArrival = firstTrain;//moment().format('HH:mm');
+    var nextArrival = nextTrain;
     var currentTime = moment().format('HH:mm')
- 
-      
-database.ref().on('value',function(snapshot) {
-      console.log(snapshot.val());
-      console.log(snapshot.val().destination);
-      console.log(snapshot.val().frequency);
-      console.log(snapshot.val().minutesAway);
-      console.log(snapshot.val().nextArrival);
-      console.log(snapshot.val().trainName);
-
-//       clickCounter = snapshot.val().clickCount;
-
-//       $('#trainName').text(snapshot.val().clickCount);
-    });
-//     // function(errorObject) {
-//     //   console.log('The read failed: ' + errorObject.code);
-//     // }
-//   );
+  
     // arrival time moment js computation
     var firstTimeConverted = moment(firstTrain, "HH:mm").subtract(1, "years");
     var currentTime = moment();
@@ -44,6 +46,7 @@ database.ref().on('value',function(snapshot) {
     var tRemainder = diffTime % frequency;
     var tMinutesTillTrain = frequency - tRemainder;
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+
     
     database.ref().set({
         trainName: $trainName,
